@@ -99,9 +99,10 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 			this.perceptronTraining.trainingSets[trainingSetIndex].remove(point);
 		},
 		/**
-		 * Notifies the change of the training values to the user interface and 
-		 * whatever interested on it.
-		 * It stores the data in a values var and then it is sent to the perceptron queue to be executed.
+		 *Notifica el cambio de los valores de entrenamiento a la interfaz de usuario y
+		* lo que esté interesado en él.
+		* Almacena los datos en valores var y luego se envía a la cola del perceptrón para ser ejecutado.
+		
 		 */
 		notify: function () {
 			var values = {
@@ -113,7 +114,7 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 					return (this.theta - x * this.weights[0]) / this.weights[1];
 				}
 			};
-			//Enqueue the notification
+			//Enqueue la notificacion 
 			Perceptron.queue.add(function () {
 				PerceptronHelper.resetResultValues(values.weights[0], values.weights[1], values.theta, values.learningReason, values.currentIteration);
 				this.canvas.initScale();
@@ -227,7 +228,7 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 				 * @param point The Point to check if it is in the set
 				 */
 				this.contains = function (point) {
-				
+
 					for (var i = 0; i < this.points.length; i++) {
 						if (this.points[i].coordinates[0] == point.coordinates[0] && this.points[i].coordinates[1] == point.coordinates[1]) {
 							return true;
