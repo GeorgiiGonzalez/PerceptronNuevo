@@ -183,11 +183,9 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 		 ********************************************/
 		classes: {
 			/**
-			 * Neural function that returns true if the value is greater than 0 and false if not.
-			 * Implements an strategy pattern to make simpler the function change.
-			 * @param neuralFunction A neural function is a function that receives one parameter as the 
-			 * perceptron response and returns the value that represents the group that this value
-			 * belongs to.
+			 * Función neuronal que devuelve verdadero si el valor es mayor que 0 y falso si no 
+			 * @param neuralFunction esta funcion  recive un parametro al cual el perceptron responde  
+			 *  y devuelve el valor del grupo al cual pertenece 
 			 * @param return The group of the value returned by the perceptron.
 			 */
 			NeuralFunction: function (neuralFunction) {
@@ -206,8 +204,8 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 			PointSet: function () {
 				this.points = new Array();
 				/**
-				 * Adds a point to the point set.
-				 * @param point The Point to add to the point set.
+				 * Agregar un punto a cunjunto de puntos 
+				 * @param point El punto a unir en el conjunto de puntos.
 				 */
 				this.addPoint = function (point) {
 					this.points.push(point);
@@ -229,6 +227,7 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 				 * @param point The Point to check if it is in the set
 				 */
 				this.contains = function (point) {
+				
 					for (var i = 0; i < this.points.length; i++) {
 						if (this.points[i].coordinates[0] == point.coordinates[0] && this.points[i].coordinates[1] == point.coordinates[1]) {
 							return true;
@@ -247,9 +246,9 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 				this.coordinates = arrayOfCoordinates;
 			},
 			/**
-			 * The part of the perceptron that trains all the values and executes the algorithm.
+			 * La parte del perceptrón que entrena todos los valores y ejecuta el algoritmo..
 			 * @param expectedOutputs outputs that are expected for this graphic.
-			 * @param neuralFunction the output function of the perceptron.
+			 * @param neuralFunction  la función de salida del perceptrón.
 			 */
 			PerceptronTraining: function (expectedOutputs, neuralFunction) {
 				//Valor gamma que representa el motivo de aprendizaje
@@ -297,7 +296,7 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 						var impulse = this.weightOperation(groupSet[position]);
 						//Check the output of the neuron to check the group it belongs to
 						if (this.expectedGroupOutputs[group] != this.neuralFunction.runCalculus(impulse)) {
-							//Adjust the neuron weights
+							//Ajustar los pesos de las neuronas
 							this.adjust(groupSet[position], this.expectedGroupOutputs[group]);
 							//Reset the counter
 							currentValuesToCheck = maxValuesToCheck + 1;
@@ -323,8 +322,8 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 				 * w1 = w1 + var(w1) -> var(w1) = gamma * d1 * x
 				 * w2 = w2 + var(w2) -> var(w2) = gamma * d2 * y
 				 * theta = theta + var(theta) -> var(theta) = gamma * theta * -1
-				 * @param point	The point to adjust.
-				 * @param expectedOutput The expected output for this point.
+				 * @param point	El punto a ajustar.
+				 * @param expectedOutput El valor esperado del punto .
 				 */
 				this.adjust = function (point, expectedOutput) {
 					for (var i = 0; i < point.length; i++) {
@@ -337,8 +336,8 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 				};
 				/**
 				 * Realiza la operación de peso: w1 * x1 + w2 * x2 = theta.
-				 * @param point The point with coordinates (x1, x2).
-				 * @returns {Number} The result.
+				 * @param point el punto con las coordenadas (x1, x2).
+				 * @returns {Number} el resultado
 				 */
 				this.weightOperation = function (point) {
 					var result = 0;
@@ -473,8 +472,8 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 					this.ctx.restore();
 				};
 				/**
-				 * Draw the different training sets of points in the canvas.
-				 * @param trainingSets Set of at least two sets that is going to be draw in the canvas.
+				 * Dibujar los diferentes conjuntos de puntos de entrenamiento en el lienzo
+				 * @param trainingSets Conjunto de al menos dos conjuntos que se dibujarán en el lienzo..
 				 */
 				this.drawTrainingSet = function (trainingSets) {
 					for (var i = 0; i < trainingSets.length; i++) {
@@ -484,35 +483,35 @@ var PerceptronClass = function Perceptron(idCanvas, queueSpeed) {
 					}
 				};
 				/**
-				 * Draw a point in the canvas
-				 * @param x The position in the ordinate axes.
-				 * @param y The position in the abscissa axes.
-				 * @param set The set where the point belongs.
+				 * Dibuja un punto en el lienzo
+				 * @param x  La posición en los ejes de ordenadas.
+				 * @param y La posición en los ejes de abscisas.
+				 * @param set  El conjunto al que pertenece el punto.
 				 */
 				this.drawPoint = function (x, y, set) {
 					switch (set) {
 						case 0: //First set
-							this.ctx.fillStyle = '#00f'; // blue
+							this.ctx.fillStyle = '#00f'; // AZUL
 							this.ctx.beginPath();
 							this.ctx.arc(this.xRealCoord(x), this.yRealCoord(y), 2, 0, Math.PI * 2, true);
 							this.ctx.closePath();
 							this.ctx.fill();
-							this.ctx.fillStyle = '#000'; // black
+							this.ctx.fillStyle = '#000'; // NEGRO
 							this.ctx.fillText(('(' + x + ',' + y + ')'), this.xRealCoord(x), this.yRealCoord(y) + 10);
 							break;
 						case 1: //Second set
-							this.ctx.fillStyle = '#f00'; // red
+							this.ctx.fillStyle = '#f00'; // ROJO
 							this.ctx.beginPath();
 							this.ctx.arc(this.xRealCoord(x), this.yRealCoord(y), 2, 0, Math.PI * 2, true);
 							this.ctx.closePath();
 							this.ctx.fill();
-							this.ctx.fillStyle = '#000'; // black
+							this.ctx.fillStyle = '#000'; // NEGRO
 							this.ctx.fillText(('(' + x + ',' + y + ')'), this.xRealCoord(x), this.yRealCoord(y) + 10);
 							break;
 					}
 				};
 				/**
-				 * Draw the function that separate the points in the canvas.
+				 * Dibuja la función que separa los puntos en el lienzo.
 				 * @param context Object that contains the function (context.f(x)).
 				 */
 				this.drawFunction = function (context) {
